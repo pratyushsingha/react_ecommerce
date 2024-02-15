@@ -45,10 +45,17 @@ const LoginPage = () => {
   const login = async ({ username, password }) => {
     try {
       setLoader(true);
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
-        password: password,
-        username: username,
-      });
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/login`,
+        {
+          password: password,
+          username: username,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log();
       const accessToken = response.data.data.accessToken;
       const refreshToken = response.data.data.refreshToken;
@@ -67,6 +74,7 @@ const LoginPage = () => {
           navigate("/profile");
         }
       }
+
       setLoader(false);
     } catch (err) {
       console.log(err);

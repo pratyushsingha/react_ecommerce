@@ -9,9 +9,12 @@ export default function AuthContextProvider({ children }) {
   const [auth, setAuth] = useState({});
   const refreshAccessToken = async () => {
     try {
-      const response = await axios.post(`/users/refresh-token`, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/refresh-token`,
+        {
+          withCredentials: true,
+        }
+      );
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.data.accessToken);
         localStorage.setItem("refreshToken", response.data.data.refreshToken);
@@ -38,17 +41,20 @@ export default function AuthContextProvider({ children }) {
   const logout = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`/users/logout`, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/logout`,
+        null, // pass null as the second argument if no data is being sent
+        {
+          withCredentials: true,
+        }
+      );
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        // window.location.reload();
         toast({
-          title: "loging out",
-          description: "successfully logging out",
+          title: "Logging out",
+          description: "Successfully logged out",
         });
         setTimeout(() => {
           window.location.reload(false);
@@ -57,8 +63,8 @@ export default function AuthContextProvider({ children }) {
     } catch (err) {
       toast({
         variant: "destructive",
-        title: "Oopps",
-        description: "something went wrong",
+        title: "Oops",
+        description: "Something went wrong",
       });
     }
   };

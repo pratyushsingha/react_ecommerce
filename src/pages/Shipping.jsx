@@ -21,8 +21,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 
 const Shipping = () => {
+  const { toast } = useToast();
   const { setLoader, getAddress } = useContext(AppContext);
   const { allAddress, profileInfo } = useContext(AppContext);
   const [selectedAddress, setSelectedAddress] = useState();
@@ -32,7 +34,7 @@ const Shipping = () => {
     try {
       setLoader(true);
       const response = await axios.post(
-        `/ecommerce/orders/provider/razorpay`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/orders/provider/razorpay`,
         { addressId: selectedAddress },
         { withCredentials: true }
       );
@@ -40,14 +42,14 @@ const Shipping = () => {
       setGeneratedOrder(response.data.data);
 
       const options = {
-        key: `${import.meta.env.VITE_RAZORPAY_KEY_ID}`,
+        key: `${import.meta.env.VITE_RAZORPAY_ID}`,
         amount: generatedOrder.amount,
         currency: generatedOrder.currency,
         name: "devcom",
         description: "payment integration with razorpay",
         image: "https://i.postimg.cc/9FLrHVRz/image-removebg-preview.png",
         order_id: generatedOrder.id,
-        callback_url: `/ecommerce/orders/provider/razorpay/verify-payment`,
+        callback_url: `${import.meta.env.VITE_BACKEND_URL}/ecommerce/orders/provider/razorpay/verify-payment`,
         prefill: {
           name: profileInfo.username,
           email: profileInfo.email,
@@ -64,6 +66,10 @@ const Shipping = () => {
       setLoader(false);
     } catch (err) {
       console.error("Razorpay payment error:", err);
+      toast({
+        title: "error",
+        description: `Razorpay payment error:,${err}`,
+      });
       setLoader(false);
     }
   };

@@ -135,7 +135,7 @@ const EditProfile = () => {
         setLoader(true);
         const formData = new FormData();
         formData.append("avatar", files);
-        console.log(formData);
+        // console.log(formData);
         const data = await axios.patch(
           `${import.meta.env.VITE_BACKEND_URL}/users/avatar`,
           formData,
@@ -143,7 +143,7 @@ const EditProfile = () => {
             withCredentials: true,
           }
         );
-        // console.log(data);
+        console.log(data);
         toast({
           title: "success",
           description: data.data.message,

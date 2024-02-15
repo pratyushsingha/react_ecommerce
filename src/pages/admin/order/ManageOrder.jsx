@@ -44,7 +44,7 @@ const ManageOrder = () => {
     e.preventDefault();
     try {
       const data = await axios.patch(
-        `/ecommerce/orders/status/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/orders/status/${id}`,
         { status: orderStatus },
         { withCredentials: true }
       );

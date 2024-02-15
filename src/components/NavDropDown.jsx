@@ -24,8 +24,8 @@ const DropdownMenu = () => {
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         {DropDownOptions.map(({ id, name, path, logo }) => (
-          <Link to={`${path}`}>
-            <DropdownMenuItem className="gap-2" key={id}>
+          <Link key={id} to={`${path}`}>
+            <DropdownMenuItem className="gap-2">
               {logo}
               <span>{name}</span>
             </DropdownMenuItem>

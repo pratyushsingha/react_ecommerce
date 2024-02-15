@@ -16,7 +16,7 @@ const useOrder = () => {
     try {
       setProgress(progress + 10);
       setLoader(true);
-      const response = await axios.get(`/ecommerce/orders/${id}`, {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/ecommerce/orders/${id}`, {
         withCredentials: true,
       });
       setAddress(response.data.data.order.address);

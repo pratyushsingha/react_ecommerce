@@ -71,7 +71,7 @@ const NewProduct = () => {
       //   for (let i = 0; i < subImages.length; i++) {
       //     formData.append("subImages", subImages);
       //   }
-      const data = await axios.post(`/ecommerce/products`, formData, {
+      const data = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/ecommerce/products`, formData, {
         withCredentials: true,
       });
       toast({

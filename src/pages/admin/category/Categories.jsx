@@ -83,7 +83,7 @@ export const columns = [
           setProgress(progress + 10);
           setLoader(true);
           const data = await axios.patch(
-            `/ecommerce/categories/${row.values._id}`,
+            `${import.meta.env.VITE_BACKEND_URL}/ecommerce/categories/${row.values._id}`,
             { name: updatedCategoryRef.current },
             { withCredentials: true }
           );
@@ -112,21 +112,22 @@ export const columns = [
           setProgress(progress + 10);
           setLoader(true);
           const data = await axios.delete(
-            `/ecommerce/categories/${row.values._id}`,
-            { name: updatedCategoryRef.current },
-            { withCredentials: true }
+            `${import.meta.env.VITE_BACKEND_URL}/ecommerce/categories/${row.values._id}`,
+            {
+              withCredentials: true,
+            }
           );
           setProgress(progress + 100);
           setLoader(false);
           toast({
-            title: "success",
+            title: "Success",
             description: data.data.message,
           });
           getCategory();
           setAopen(false);
         } catch (err) {
           toast({
-            title: "error",
+            title: "Error",
             description: err.response.data.message,
           });
           console.log(err);

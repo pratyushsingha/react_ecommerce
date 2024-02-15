@@ -13,7 +13,7 @@ const useCart = () => {
       setLoader(true);
       if (localStorage.getItem("accessToken")) {
         const response = await axios.post(
-          `/ecommerce/cart/item/${productId}`,
+          `${import.meta.env.VITE_BACKEND_URL}/ecommerce/cart/item/${productId}`,
           {},
           {
             withCredentials: true,
@@ -48,7 +48,7 @@ const useCart = () => {
       toast({
         varinat: "destructive",
         title: "error",
-        description: " err.response.data.message",
+        description: err.response.data.message,
       });
       setLoader(false);
     }

@@ -55,7 +55,7 @@ const ManageProduct = () => {
     try {
       setProgress(progress + 10);
       setLoader(true);
-      const response = await axios.get(`/ecommerce/products/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/ecommerce/products/${id}`);
       setProductDetails([response.data.data]);
       setUpdatedProduct(response.data.data);
       setProgress(progress + 100);
@@ -102,7 +102,7 @@ const ManageProduct = () => {
       formData.append("stock", updatedProduct.stock);
 
       const response = await axios.patch(
-        `/ecommerce/products/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/products/${id}`,
         formData,
         { withCredentials: true }
       );
@@ -123,7 +123,7 @@ const ManageProduct = () => {
 
   const deleteProrduct = async () => {
     try {
-      const response = await axios.delete(`/ecommerce/products/${id}
+      const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/ecommerce/products/${id}
 `);
       // console.log(response);
       toast({

@@ -63,7 +63,7 @@ export const columns = [
           setProgress(progress + 10);
           setLoader(true);
           const data = await axios.patch(
-            `/ecommerce/coupons/${couponId}`,
+            `${import.meta.env.VITE_BACKEND_URL}/ecommerce/coupons/${couponId}`,
             couponUpdate,
             { withCredentials: true }
           );
@@ -90,7 +90,7 @@ export const columns = [
           setProgress(progress + 10);
           setLoader(true);
           const response = await axios.delete(
-            `/ecommerce/coupons/${couponId}`,
+            `${import.meta.env.VITE_BACKEND_URL}/ecommerce/coupons/${couponId}`,
             {
               withCredentials: true,
             }

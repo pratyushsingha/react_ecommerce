@@ -58,8 +58,9 @@ const AddressForm = () => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="city">City</Label>
+          <Label htmlFor="state">state</Label>
           <Select
+            id="state"
             defaultValue={address.state}
             onValueChange={(value) => setAddress({ ...address, state: value })}
             value={address.state}
@@ -82,8 +83,9 @@ const AddressForm = () => {
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="city">City</Label>
+          <Label htmlFor="pin">Pincode</Label>
           <Input
+            id="pin"
             value={address.pincode}
             type="number"
             placeholder="Pin Code"
@@ -94,8 +96,9 @@ const AddressForm = () => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="city">City</Label>
+          <Label htmlFor="country">Country</Label>
           <Select
+            id="country"
             defaultValue={address.country}
             onValueChange={(value) =>
               setAddress({ ...address, country: value })

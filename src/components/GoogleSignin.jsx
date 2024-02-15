@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 const GoogleSignin = () => {
     
   const loginwithgoogle = () => {
-    window.open("http://localhost:8080/api/v1/users/google", "_self");
+    window.open("${import.meta.env.VITE_BACKEND_URL}/users/google", "_self");
   };
 
   return (

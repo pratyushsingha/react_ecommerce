@@ -105,9 +105,9 @@ const router = createBrowserRouter([
       {
         path: "/paymentSuccess",
         element: (
-          <AuthLayout authentication>
-            <SuccessPage />
-          </AuthLayout>
+          // <AuthLayout authentication>
+          <SuccessPage />
+          // </AuthLayout>
         ),
       },
       {

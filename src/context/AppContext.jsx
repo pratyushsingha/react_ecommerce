@@ -69,7 +69,9 @@ export default function AppContextProvider({ children }) {
       setProgress(progress + 10);
       setLoader(true);
       const response = await axios.get(
-        `/ecommerce/products?page=${page}&limit=12`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/ecommerce/products?page=${page}&limit=12`
       );
       setProducts(response.data.data.products);
       setHasNextPage(response.data.data.hasNextPage);
@@ -87,7 +89,9 @@ export default function AppContextProvider({ children }) {
       setLoader(true);
       setProgress(progress + 10);
       const response = await axios.get(
-        `/ecommerce/categories?page=${page}&limit=15`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/ecommerce/categories?page=${page}&limit=15`
       );
       setCategories(response.data.data.categories);
       setHasNextPage(response.data.data.hasNextPage);
@@ -104,7 +108,7 @@ export default function AppContextProvider({ children }) {
     try {
       if (localStorage.getItem("accessToken")) {
         const cartItems = await axios.get(
-          `/ecommerce/cart`,
+          `${import.meta.env.VITE_BACKEND_URL}/ecommerce/cart`,
           {
             withCredentials: true,
           }
@@ -118,7 +122,7 @@ export default function AppContextProvider({ children }) {
           toast.success("already added to cart");
         } else {
           const response = await axios.post(
-            `${
+            `${import.meta.env.VITE_BACKEND_URL}${
               import.meta.env.VITE_BACKEND_URL
             }/ecommerce/cart/item/${productId}`,
             {
@@ -139,7 +143,7 @@ export default function AppContextProvider({ children }) {
   const cartItemUpdate = async (id, qty) => {
     try {
       const response = await axios.post(
-        `/ecommerce/cart/item/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/cart/item/${id}`,
         {
           quantity: qty,
         },
@@ -157,7 +161,7 @@ export default function AppContextProvider({ children }) {
       setLoader(true);
       setProgress(progress + 10);
       const response = await axios.get(
-        `/ecommerce/cart`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/cart`,
         {
           withCredentials: true,
         }
@@ -187,7 +191,7 @@ export default function AppContextProvider({ children }) {
     try {
       setLoader(true);
       const response = await axios.delete(
-        `/ecommerce/cart/item/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/cart/item/${id}`,
         {
           withCredentials: true,
         }
@@ -204,7 +208,8 @@ export default function AppContextProvider({ children }) {
     try {
       setLoader(true);
       const response = await axios.delete(
-        `/ecommerce/cart/clear`
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/cart/clear`,
+        { withCredentials: true }
       );
       getCart();
       setLoader(false);
@@ -240,7 +245,10 @@ export default function AppContextProvider({ children }) {
       setLoader(true);
       setProgress(progress + 10);
       const response = await axios.get(
-        `/ecommerce/coupons?page=${page}&limit=15`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/ecommerce/coupons?page=${page}&limit=15`,
+        { withCredentials: true }
       );
       setAllCoupons(response.data.data.coupons);
       setChasNextPage(response.data.data.hasNextPage);
@@ -256,7 +264,9 @@ export default function AppContextProvider({ children }) {
     try {
       setLoader(true);
       const response = await axios.get(
-        `/ecommerce/coupons/customer/available?page=1&limit=10`,
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/ecommerce/coupons/customer/available?page=1&limit=10`,
         {
           withCredentials: true,
         }
@@ -272,7 +282,7 @@ export default function AppContextProvider({ children }) {
   const applyCoupon = async (couponCode) => {
     try {
       const response = await axios.post(
-        `/ecommerce/coupons/c/apply`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/coupons/c/apply`,
         {
           couponCode: couponCode,
         },
@@ -294,7 +304,7 @@ export default function AppContextProvider({ children }) {
   const removeCoupon = async (couponCode) => {
     try {
       const response = await axios.post(
-        `/ecommerce/coupons/c/remove`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/coupons/c/remove`,
         { couponCode: couponCode },
         { withCredentials: true }
       );
@@ -310,7 +320,8 @@ export default function AppContextProvider({ children }) {
   const getAddress = async () => {
     try {
       const response = await axios.get(
-        `/ecommerce/addresses`
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/addresses`,
+        { withCredentials: true }
       );
       setAllAddress(response.data.data.addresses);
     } catch (err) {
@@ -323,7 +334,7 @@ export default function AppContextProvider({ children }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `/ecommerce/addresses`,
+        `${import.meta.env.VITE_BACKEND_URL}/ecommerce/addresses`,
         address,
         {
           withCredentials: true,
@@ -341,23 +352,20 @@ export default function AppContextProvider({ children }) {
 
   const getProfile = async () => {
     try {
-      setLoader(true);
-      setProgress(progress + 10);
       const response = await axios.get(
-        `/users/current-user`
+        `${import.meta.env.VITE_BACKEND_URL}/users/current-user`,
+        { withCredentials: true }
       );
+      console.log(response.data.data.avatar.url);
       setProfileInfo({
         avatar: response.data.data.avatar.url,
         email: response.data.data.email,
         username: response.data.data.username,
         role: response.data.data.role,
       });
-      setLoader(false);
-      setProgress(progress + 100);
+      console.log(response);
     } catch (err) {
       console.log(err);
-      setLoader(false);
-      setProgress(progress + 100);
     }
   };
 
@@ -442,7 +450,10 @@ export default function AppContextProvider({ children }) {
       setProgress(progress + 10);
       setLoader(true);
       const response = await axios.get(
-        `/ecommerce/orders/list/admin?status=${statusFilter}&page=${page}&limit=15`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/ecommerce/orders/list/admin?status=${statusFilter}&page=${page}&limit=15`,
+        { withCredentials: true }
       );
 
       setOrders(response.data.data.orders);
